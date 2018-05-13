@@ -12,6 +12,7 @@ public class SurrealGrassCreator : EditorWindow {
         GetWindow<SurrealGrassCreator>("SG Creator");
     }
 
+
     public GameObject targetObject;
     public Texture2D densityMap;
     public int cellDivisions;
@@ -232,18 +233,25 @@ public class SurrealGrassCreator : EditorWindow {
                                 }
                             }
                         }
-                        mesh.SetVertices(positions);
-                        mesh.SetIndices(indicies.ToArray(), MeshTopology.Points, 0);
-                        mesh.SetNormals(normals);
-                        filter.mesh = mesh;
-                        filter.transform.position = new Vector3(0, 0, 0);
+                        if (hitCount > 1)
+                        {
+                            mesh.SetVertices(positions);
+                            mesh.SetIndices(indicies.ToArray(), MeshTopology.Points, 0);
+                            mesh.SetNormals(normals);
+                            filter.mesh = mesh;
+                            filter.transform.position = new Vector3(0, 0, 0);
 
-                        if (grassMaterial != null)
-                            renderer.material = grassMaterial;
+                            if (grassMaterial != null)
+                                renderer.material = grassMaterial;
 
-                        parentEmpty.layer = layerMask.value;
-                        empty.layer = layerMask.value;
-                        empty.transform.SetParent(parentEmpty.transform, true);
+                            parentEmpty.layer = layerMask.value;
+                            empty.layer = layerMask.value;
+                            empty.transform.SetParent(parentEmpty.transform, true);
+                        }
+                        else
+                        {
+                            DestroyImmediate(empty);
+                        }
                     }
                 }
                 targetObject.layer = originalLayer;

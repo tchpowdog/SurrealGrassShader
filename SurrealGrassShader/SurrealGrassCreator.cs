@@ -24,7 +24,8 @@ public class SurrealGrassCreator : EditorWindow {
     public Vector2 scrollPosition;
 
     public int originalLayer;
-    public string[] layers;
+    //public string[] layers;
+    public GUIContent[] layers;
     public int selectedLayer;
 
     private void OnGUI()
@@ -83,7 +84,7 @@ public class SurrealGrassCreator : EditorWindow {
             }
         }
 
-        List<string> tempLayerList = new List<string>();
+        List<GUIContent> tempLayerList = new List<GUIContent>();
         for (int i = 0; i <= 31; i++)
         {
             var layer = LayerMask.LayerToName(i);
@@ -91,7 +92,7 @@ public class SurrealGrassCreator : EditorWindow {
             {
                 if (FindGameObjectsWithLayer(layer) == null)
                 {
-                    tempLayerList.Add(layer);
+                    tempLayerList.Add(new GUIContent(layer));
                 }
             }
         }
@@ -171,7 +172,7 @@ public class SurrealGrassCreator : EditorWindow {
                 float destZPosition = srcZPosition;
 
                 LayerMask layerMask = new LayerMask();
-                layerMask.value = LayerMask.NameToLayer(layers[selectedLayer]);
+                layerMask.value = LayerMask.NameToLayer(layers[selectedLayer].text);
 
                 originalLayer = targetObject.layer;
                 targetObject.layer = layerMask.value;

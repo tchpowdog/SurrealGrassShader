@@ -1,6 +1,6 @@
 ﻿
 
-Shader "Custom/Surreal Grass Shader(Deferred)" {
+Shader "Custom/Surreal Grass Shader(Forward)" {
 	Properties{
 		[Header(Grass Blade 1)]
 		_Albedo1("Albedo", 2D) = "white" {}
@@ -74,8 +74,9 @@ Shader "Custom/Surreal Grass Shader(Deferred)" {
 		{
 			CULL OFF
 			Blend Off
+			Lighting On
 
-			Tags{ "LightMode" = "Deferred" }
+			Tags{ "LightMode" = "ForwardBase" }
 
 			CGPROGRAM
 //#include "UnityCG.cginc"
@@ -87,6 +88,7 @@ Shader "Custom/Surreal Grass Shader(Deferred)" {
 			#pragma vertex vert
 			#pragma geometry geom
 			#pragma fragment frag
+			#pragma multi_compile_fwdbase
 			#pragma multi_compile_prepassfinal noshadowmask nodynlightmap nodirlightmap nolightmap
 
 
